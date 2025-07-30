@@ -5,95 +5,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dopamine Slap</title>
-    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-    <script>
-        const animations = [
-            {
-                type: "lottie",
-                src: "https://assets7.lottiefiles.com/packages/lf20_z9ed2jna.json",
-                sound: "sounds/slap1.mp3"
-            },
-            {
-                type: "gif",
-                src: "media/fist_bump_8bit.gif",
-                sound: "sounds/fist1.mp3"
-            },
-            {
-                type: "video",
-                src: "media/surreal_five.webm",
-                sound: "sounds/surreal.mp3"
-            }
-        ];
-
-        let currentSound = null;
-        let isMuted = false;
-
-        function playRandomAnimation() {
-            const container = document.getElementById("animation-container");
-            container.innerHTML = "";
-
-            const random = animations[Math.floor(Math.random() * animations.length)];
-
-            if (random.type === "lottie") {
-                const player = document.createElement("lottie-player");
-                player.setAttribute("src", random.src);
-                player.setAttribute("background", "transparent");
-                player.setAttribute("speed", "1");
-                player.setAttribute("autoplay", "");
-                player.style.width = "300px";
-                player.style.height = "300px";
-                container.appendChild(player);
-            } else if (random.type === "gif") {
-                const img = document.createElement("img");
-                img.src = random.src;
-                img.style.width = "300px";
-                img.style.height = "300px";
-                container.appendChild(img);
-            } else if (random.type === "video") {
-                const video = document.createElement("video");
-                video.src = random.src;
-                video.autoplay = true;
-                video.loop = true;
-                video.muted = isMuted;
-                video.style.width = "300px";
-                video.style.height = "300px";
-                container.appendChild(video);
-            }
-
-            if (!isMuted && random.sound) {
-                if (currentSound) currentSound.pause();
-                currentSound = new Audio(random.sound);
-                currentSound.play();
-            }
-        }
-
-        function toggleMute() {
-            isMuted = !isMuted;
-            document.getElementById("mute-btn").innerText = isMuted ? "Unmute" : "Mute";
-        }
-
-        window.onload = () => {
-            playRandomAnimation();
-        };
-    </script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css" />
 </head>
 
-<body class="bg-gray-900 text-white flex flex-col items-center justify-center min-h-screen">
-    <h1 class="text-3xl font-bold mb-6 mt-4">👊 The Dopamine Slap</h1>
-
-    <div id="animation-container" class="mb-6"></div>
-
-    <div class="flex gap-4">
-        <button onclick="playRandomAnimation()" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 rounded-xl">High Five
-            Me!</button>
-        <button id="mute-btn" onclick="toggleMute()"
-            class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-xl">Mute</button>
+<body>
+    <div class="container">
+        <video id="animationPlayer" autoplay muted playsinline></video>
+        <audio id="soundPlayer"></audio>
+        <button onclick="playRandom()">🔁 Hit Me Again!</button>
     </div>
 
-    <footer class="mt-10 text-sm opacity-50">
-        Made with 👊 by [Your Name] — <a href="#" class="underline">Get More Slaps</a>
-    </footer>
+    <script src="script.js"></script>
 </body>
 
 </html>
